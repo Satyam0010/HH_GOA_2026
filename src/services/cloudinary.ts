@@ -1,31 +1,35 @@
 import { canvasToBlob } from '../utils/render';
 
 interface UploadResponse {
-  url: string;
+  url?: unknown;
+  error?: unknown;
 }
 
 export async function uploadGraphic(canvas: HTMLCanvasElement, format: 'frame' | 'id'): Promise<string> {
-  const blob = await canvasToBlob(canvas);
-  const image = await blobToDataUrl(blob);
-  const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/upload-graphic`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-      apikey: import.meta.env.VITE_SUPABASE_ANON_KEY,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ image, format }),
-  });
-  const result = await response.json() as Partial<UploadResponse> & { error?: string };
-  if (!response.ok || typeof result.url !== 'string') throw new Error(result.error || 'Image sharing is temporarily unavailable.');
-  return result.url;
-}
+  const apiUrl = import.meta.env.VITE_SHARE_API_URL;
+  if (!apiUrl) {
+    throw new Error('Sharing is not configured. Set VITE_SHARE_API_URL.');
+  }
 
-function blobToDataUrl(blob: Blob): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => typeof reader.result === 'string' ? resolve(reader.result) : reject(new Error('Could not prepare image.'));
-    reader.onerror = () => reject(new Error('Could not prepare image.'));
-    reader.readAsDataURL(blob);
-  });
+  const blob = await canvasToBlob(canvas);
+  const form = new FormData();
+  form.append('file', blob, 'hackerhouse-goa-builder-id.png');
+  form.append('format', format);
+
+  let response: Response;
+  try {
+    response = await fetch(`${apiUrl.replace(/\/$/, '')}/upload`, {
+      method: 'POST',
+      body: form,
+    });
+  } catch {
+    throw new Error('Could not reach the share server. Please try again shortly.');
+  }
+
+  const data = await response.json().catch(() => ({})) as UploadResponse;
+  if (!response.ok || typeof data.url !== 'string') {
+    throw new Error(typeof data.error === 'string' ? data.error : 'Could not upload your graphic.');
+  }
+
+  return data.url;
 }
