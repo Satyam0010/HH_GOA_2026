@@ -1,36 +1,39 @@
 import { canvasToBlob } from '../utils/render';
 
-interface UploadResponse {
-  url?: unknown;
-  error?: unknown;
+interface CloudinaryResponse {
+  secure_url?: unknown;
+  error?: { message?: unknown };
 }
 
-export async function uploadGraphic(canvas: HTMLCanvasElement, format: 'frame' | 'id'): Promise<string> {
-  const apiUrl = import.meta.env.VITE_SHARE_API_URL;
-  if (!apiUrl) {
-    throw new Error('Sharing is not configured. Set VITE_SHARE_API_URL.');
+export async function uploadGraphic(
+  canvas: HTMLCanvasElement,
+  _format: 'frame' | 'id',
+): Promise<string> {
+  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+  const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
+
+  if (!cloudName || !uploadPreset) {
+    throw new Error('Cloudinary sharing is not configured.');
   }
 
   const blob = await canvasToBlob(canvas);
-  const form = new FormData();
-  form.append('file', blob, 'hackerhouse-goa-builder-id.png');
-  form.append('format', format);
+  const formData = new FormData();
+  formData.append('file', blob, 'hackerhouse-goa.png');
+  formData.append('upload_preset', uploadPreset);
+  formData.append('folder', 'hh-goa');
 
-  let response: Response;
-  try {
-    response = await fetch(`${apiUrl.replace(/\/$/, '')}/upload`, {
-      method: 'POST',
-      body: form,
-    });
-  } catch {
-    throw new Error('Could not reach the share server. Please try again shortly.');
+  const response = await fetch(
+    `https://api.cloudinary.com/v1_1/${encodeURIComponent(cloudName)}/image/upload`,
+    { method: 'POST', body: formData },
+  );
+  const data = await response.json().catch(() => ({})) as CloudinaryResponse;
+
+  if (!response.ok || typeof data.secure_url !== 'string') {
+    const message = typeof data.error?.message === 'string'
+      ? data.error.message
+      : 'Cloudinary upload failed.';
+    throw new Error(message);
   }
 
-  const data = await response.json().catch(() => ({})) as UploadResponse;
-  console.log("UPLOAD RESPONSE:", data);
-  if (!response.ok || typeof data.url !== 'string') {
-    throw new Error(typeof data.error === 'string' ? data.error : 'Could not upload your graphic.');
-  }
-
-  return data.url;
+  return data.secure_url;
 }

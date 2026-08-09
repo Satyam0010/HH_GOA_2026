@@ -141,19 +141,23 @@ function App() {
 
   const handleShare = async () => {
     if (!photoUrl || isSharing) return;
+
     setIsSharing(true);
     setShareError("");
+
     try {
       const photo = await loadImage(photoUrl);
-      const canvas = await renderGraphic({ format, photo, name, role });
+      const canvas = await renderGraphic({
+        format,
+        photo,
+        name,
+        role,
+      });
       const imageUrl = await uploadGraphic(canvas, format);
-      const text = encodeURIComponent(buildShareText());
-      const shareUrl = encodeURIComponent(imageUrl);
-      window.open(
-        `https://twitter.com/intent/tweet?text=${text}&url=${shareUrl}`,
-        "_blank",
-        "noopener,noreferrer",
-      );
+      const shareUrl = `https://hh-goa-2026-pearl.vercel.app/api/share?image=${encodeURIComponent(imageUrl)}`;
+      const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(buildShareText())}&url=${encodeURIComponent(shareUrl)}`;
+
+      window.open(twitterUrl, "_blank", "noopener,noreferrer");
     } catch (err) {
       setShareError(
         err instanceof Error
