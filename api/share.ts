@@ -4,7 +4,9 @@ type VercelRequest = {
 
 type VercelResponse = {
   setHeader(name: string, value: string): void;
-  send(body: string): void;
+  status(code: number): {
+    send(body: string): void;
+  };
 };
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
@@ -12,7 +14,7 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
 
   res.setHeader("Content-Type", "text/html");
 
-  res.send(`
+  res.status(200).send(`
     <!DOCTYPE html>
     <html>
       <head>
@@ -25,11 +27,8 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
         <meta property="og:description" content="My frame is ready 🚀" />
         <meta property="og:image" content="${image}" />
       </head>
-
       <body>
-        <script>
-          window.location.href = "/";
-        </script>
+        Preview Page
       </body>
     </html>
   `);
