@@ -27,6 +27,7 @@ export async function uploadGraphic(canvas: HTMLCanvasElement, format: 'frame' |
   }
 
   const data = await response.json().catch(() => ({})) as UploadResponse;
+  console.log("UPLOAD RESPONSE:", data);
   if (!response.ok || typeof data.url !== 'string') {
     throw new Error(typeof data.error === 'string' ? data.error : 'Could not upload your graphic.');
   }
