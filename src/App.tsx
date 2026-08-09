@@ -154,7 +154,7 @@ function App() {
         role,
       });
       const imageUrl = await uploadGraphic(canvas, format);
-      const shareUrl = `https://hh-goa-2026-pearl.vercel.app/api/share?image=${encodeURIComponent(image)}&v=${Date.now()}`;
+      const shareUrl = `https://hh-goa-2026-pearl.vercel.app/api/share?image=${encodeURIComponent(imageUrl)}&v=${Date.now()}`;
       const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(buildShareText())}&url=${encodeURIComponent(shareUrl)}`;
 
       window.open(twitterUrl, "_blank", "noopener,noreferrer");
