@@ -4,6 +4,7 @@ type VercelRequest = {
 
 type VercelResponse = {
   setHeader(name: string, value: string): void;
+  
   status(code: number): {
     send(body: string): void;
   };
@@ -13,6 +14,7 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
   const image = req.query.image as string;
 
   res.setHeader("Content-Type", "text/html");
+  res.setHeader("Cache-Control", "no-store, max-age=0");
 
   res.status(200).send(`
     <!DOCTYPE html>
