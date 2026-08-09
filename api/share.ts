@@ -20,7 +20,7 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
       ? image[0]
       : '';
 
-  // ✅ Proper fallback (REAL URL, no markdown)
+  // ✅ FIXED fallback (REAL URL)
   const imageUrl =
     rawImage && rawImage.length > 0
       ? rawImage
@@ -38,25 +38,28 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
     imageUrl
   )}&v=${version}`;
 
+  // ✅ FULL HTML (THIS WAS MISSING)
   const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>HackerHouse Goa 2026</title>
+  <meta charset="utf-8" />
+
+  <title>${title}</title>
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="${title}" />
+  <meta property="og:description" content="${description}" />
+  <meta property="og:image" content="${imageUrl}?v=${version}" />
+  <meta property="og:url" content="${shareUrl}" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="HackerHouse Goa 2026" />
-  <meta name="twitter:description" content="Just built my HackerHouse Goa frame 🚀" />
-  <meta name="twitter:image" content="IMAGE_URL?v=123" />
+  <meta name="twitter:title" content="${title}" />
+  <meta name="twitter:description" content="${description}" />
+  <meta name="twitter:image" content="${imageUrl}?v=${version}" />
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="HackerHouse Goa 2026" />
-  <meta property="og:description" content="Join me at HackerHouse Goa 🚀" />
-  <meta property="og:image" content="IMAGE_URL?v=123" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="FULL_SHARE_URL" />
 </head>
-
 <body>
   <p>HackerHouse Goa 2026</p>
 </body>
@@ -64,7 +67,7 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
 
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
 
-  // ✅ CRITICAL: prevent caching issues
+  // ✅ CRITICAL
   res.setHeader(
     'Cache-Control',
     'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0'
