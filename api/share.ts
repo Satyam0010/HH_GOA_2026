@@ -1,37 +1,23 @@
-type VercelRequest = {
-  query: Record<string, string | string[] | undefined>;
-};
-
-type VercelResponse = {
-  setHeader(name: string, value: string): void;
-  
-  status(code: number): {
-    send(body: string): void;
-  };
-};
-
-export default function handler(req: VercelRequest, res: VercelResponse) {
-  const image = req.query.image as string;
+export default function handler(req: any, res: any) {
+  const image = req.query.image;
 
   res.setHeader("Content-Type", "text/html");
-  res.setHeader("Cache-Control", "no-store, max-age=0");
+  res.setHeader("Cache-Control", "no-store");
 
   res.status(200).send(`
     <!DOCTYPE html>
     <html>
       <head>
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="My HackerHouse Goa Frame" />
-        <meta name="twitter:description" content="My frame is ready 🚀" />
+        <meta name="twitter:title" content="HackerHouse Goa 2026" />
+        <meta name="twitter:description" content="Just built my HackerHouse Goa frame 🚀 #FrameInGoa" />
         <meta name="twitter:image" content="${image}" />
 
-        <meta property="og:title" content="My HackerHouse Goa Frame" />
-        <meta property="og:description" content="My frame is ready 🚀" />
+        <meta property="og:title" content="HackerHouse Goa 2026" />
+        <meta property="og:description" content="Just built my HackerHouse Goa frame 🚀 #FrameInGoa" />
         <meta property="og:image" content="${image}" />
       </head>
-      <body>
-        Preview Page
-      </body>
+      <body>OK</body>
     </html>
   `);
 }
