@@ -115,9 +115,27 @@ function App() {
   };
 
   const buildShareText = () =>
-  format === "frame"
-    ? "Got my Hacker House Goa PFP ready. Guess it’s getting real now #FrameInGoa"
-    : `Got my Builder ID for Hacker House. Now it’s time to build something worth showing 👀 #FrameInGoa`;
+    format === "frame"
+      ? `🌴 Hacker House Goa is officially on my profile!
+      👤 ${name}
+      💻 ${role}
+      A little frame, a lot of excitement. See you in Goa! 🚀
+
+      Create your own PFP Frame/Builder Card:
+      https://hh-goa-2026-pearl.vercel.app/
+
+      #FrameInGoa #HHGoa2026
+      `
+      : `Got my Builder ID for Hacker House Goa!
+
+        👤 ${name}
+        💻 ${role}
+
+        Now it’s time to build something worth showing 👀
+
+        Create your own PFP Frame/Builder Card: https://hh-goa-2026-pearl.vercel.app/
+
+        #FrameInGoa #HHGoa2026`;
 
   const handleDownload = async () => {
     if (!photoUrl || isRendering) return;
