@@ -114,21 +114,15 @@ function App() {
     if (inputRef.current) inputRef.current.value = "";
   };
 
-  const buildShareText = () =>
-    format === "frame"
-      ? `🌴 Hacker House Goa is officially on my profile!
+const buildShareText = () =>
+  format === "frame"
+    ? `🌴 Hacker House Goa is officially on my profile!
 A little frame, a lot of excitement. See you in Goa! 🚀
-
-Create your own PFP Frame/Builder Card:
-https://hh-goa-2026-pearl.vercel.app/
-
-#FrameInGoa #HHGoa2026
-`
-      : `Got my Builder ID for Hacker House Goa!
+#FrameInGoa #HHGoa2026`
+    : `Got my Builder ID for Hacker House Goa!
 👤 ${name}
 💻 ${role}
 Now it’s time to build something worth showing 👀
-Create your own PFP Frame/Builder Card: https://hh-goa-2026-pearl.vercel.app/
 #FrameInGoa #HHGoa2026`;
 
   const handleDownload = async () => {
