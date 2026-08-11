@@ -117,8 +117,6 @@ function App() {
   const buildShareText = () =>
     format === "frame"
       ? `🌴 Hacker House Goa is officially on my profile!
-👤 ${name}
-💻 ${role}
 A little frame, a lot of excitement. See you in Goa! 🚀
 
 Create your own PFP Frame/Builder Card:
