@@ -84,12 +84,14 @@ function drawBuilderId(ctx: CanvasRenderingContext2D, photo: HTMLImageElement | 
   drawPostcardStamp(ctx, 85, 70);
   drawRoundSeal(ctx, 907, 98);
 
-  setText(ctx, `bold 69px Georgia, serif`, GREEN_DARK);
-  ctx.fillText('HACKER', 365, 226);
-  setText(ctx, `bold 67px Georgia, serif`, GREEN_DARK);
-  ctx.fillText('HOUSE', 804, 226);
-  setText(ctx, `bold 46px Georgia, serif`, PINK);
-  ctx.fillText('GOA', 600, 227);
+ setText(ctx, `bold 60px Georgia, serif`, GREEN_DARK);
+ctx.fillText('HACKER', 365, 226);
+
+setText(ctx, `bold 58px Georgia, serif`, GREEN_DARK);
+ctx.fillText('HOUSE', 835, 226);
+
+setText(ctx, `bold 42px Georgia, serif`, PINK);
+ctx.fillText('GOA', 600, 227);
   drawSparkle(ctx, 125, 265, PINK);
   drawSparkle(ctx, 1070, 270, YELLOW);
 
