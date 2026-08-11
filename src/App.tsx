@@ -20,6 +20,7 @@ import {
   RenderFormat,
 } from "./utils/render";
 import { uploadGraphic } from "./services/cloudinary";
+import { createShare } from "./services/share";
 
 const MAX_SIZE = 12 * 1024 * 1024;
 const ACCEPTED = ["image/jpeg", "image/png", "image/heic", "image/heif"];
@@ -154,11 +155,10 @@ function App() {
         role,
       });
       const imageUrl = await uploadGraphic(canvas, format);
-      const shareUrl = new URL('/api/share', window.location.origin);
-      shareUrl.searchParams.set('image', imageUrl);
+      const { shareUrl } = await createShare(imageUrl);
       const twitterUrl = new URL('https://twitter.com/intent/tweet');
       twitterUrl.searchParams.set('text', buildShareText());
-      twitterUrl.searchParams.set('url', shareUrl.toString());
+      twitterUrl.searchParams.set('url', shareUrl);
 
       window.open(twitterUrl.toString(), "_blank", "noopener,noreferrer");
     } catch (err) {

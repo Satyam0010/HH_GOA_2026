@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.api.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "./node_modules/.tmp/share-handler-test",
+    "rootDir": "./api"
+  },
+  "include": ["api/share.ts"]
+}
