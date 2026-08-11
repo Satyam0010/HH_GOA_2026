@@ -115,9 +115,9 @@ function App() {
   };
 
   const buildShareText = () =>
-    format === "frame"
-      ? "My HackerHouse Goa frame is ready. #FrameInGoa"
-      : `Just built my HackerHouse Goa Builder ID${name ? ` - ${name}` : ""} 🚀 #FrameInGoa`;
+  format === "frame"
+    ? "Got my Hacker House Goa PFP ready. Guess it’s getting real now #FrameInGoa"
+    : `Got my Builder ID for Hacker House. Now it’s time to build something worth showing 👀 #FrameInGoa`;
 
   const handleDownload = async () => {
     if (!photoUrl || isRendering) return;
@@ -157,6 +157,7 @@ function App() {
       const imageUrl = await uploadGraphic(canvas, format);
       const { shareUrl } = await createShare(imageUrl);
       const twitterUrl = new URL('https://twitter.com/intent/tweet');
+      twitterUrl.searchParams.set('text', buildShareText());
       twitterUrl.searchParams.set('url', shareUrl);
 
       window.open(twitterUrl.toString(), "_blank", "noopener,noreferrer");
