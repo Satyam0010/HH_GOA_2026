@@ -428,7 +428,7 @@ export function renderSharePage(
     "    .mark { display: grid; place-items: center; width: 38px; height: 38px; background: var(--pink); color: var(--yellow); font-family: Georgia, serif; letter-spacing: -.08em; }",
     "    .hero { margin: 46px 0 30px; display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 42px; align-items: center; }",
     "    .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .14em; color: var(--pink); }",
-    "    h1 { margin: 14px 0; font: 600 clamp(36px, 6vw, 62px)/.95 Georgia, serif; letter-spacing: -.05em; overflow-wrap: break-word; }",
+    "    h1 {margin: 14px 0;font: 600 clamp(36px, 5vw, 56px)/.95 Georgia, serif;letter-spacing: -.05em; white-space: nowrap;}",
     "    p { font-size: 17px; line-height: 1.55; color: #466258; }",
     "    .cta { display: inline-block; margin-top: 16px; padding: 14px 18px; background: var(--green); color: var(--cream); font-weight: 700; text-decoration: none; }",
     "    .image-wrap { background: var(--green); padding: 12px; box-shadow: 16px 16px 0 rgba(22, 75, 56, .12); }",
