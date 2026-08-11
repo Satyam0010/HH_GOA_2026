@@ -117,25 +117,21 @@ function App() {
   const buildShareText = () =>
     format === "frame"
       ? `🌴 Hacker House Goa is officially on my profile!
-      👤 ${name}
-      💻 ${role}
-      A little frame, a lot of excitement. See you in Goa! 🚀
+👤 ${name}
+💻 ${role}
+A little frame, a lot of excitement. See you in Goa! 🚀
 
-      Create your own PFP Frame/Builder Card:
-      https://hh-goa-2026-pearl.vercel.app/
+Create your own PFP Frame/Builder Card:
+https://hh-goa-2026-pearl.vercel.app/
 
-      #FrameInGoa #HHGoa2026
-      `
+#FrameInGoa #HHGoa2026
+`
       : `Got my Builder ID for Hacker House Goa!
-
-        👤 ${name}
-        💻 ${role}
-
-        Now it’s time to build something worth showing 👀
-
-        Create your own PFP Frame/Builder Card: https://hh-goa-2026-pearl.vercel.app/
-
-        #FrameInGoa #HHGoa2026`;
+👤 ${name}
+💻 ${role}
+Now it’s time to build something worth showing 👀
+Create your own PFP Frame/Builder Card: https://hh-goa-2026-pearl.vercel.app/
+#FrameInGoa #HHGoa2026`;
 
   const handleDownload = async () => {
     if (!photoUrl || isRendering) return;
