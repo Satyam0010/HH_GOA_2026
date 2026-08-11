@@ -118,11 +118,17 @@ const buildShareText = () =>
   format === "frame"
     ? `🌴 Hacker House Goa is officially on my profile!
 A little frame, a lot of excitement. See you in Goa! 🚀
-#FrameInGoa #HHGoa2026`
+
+Create your own PFP Frame/Builder Card:
+https://hh-goa-2026-pearl.vercel.app/
+
+#FrameInGoa #HHGoa2026
+`
     : `Got my Builder ID for Hacker House Goa!
 👤 ${name}
 💻 ${role}
 Now it’s time to build something worth showing 👀
+Create your own PFP Frame/Builder Card: https://hh-goa-2026-pearl.vercel.app/
 #FrameInGoa #HHGoa2026`;
 
   const handleDownload = async () => {
@@ -162,12 +168,15 @@ Now it’s time to build something worth showing 👀
       });
       const imageUrl = await uploadGraphic(canvas, format);
       const { shareUrl } = await createShare(imageUrl);
-      const twitterUrl = new URL('https://twitter.com/intent/tweet');
-      twitterUrl.searchParams.set('text', buildShareText());
-      twitterUrl.searchParams.set('url', shareUrl);
+      const twitterUrl = new URL("https://twitter.com/intent/tweet");
 
-      window.open(twitterUrl.toString(), "_blank", "noopener,noreferrer");
-    } catch (err) {
+      twitterUrl.searchParams.set(
+        "text",
+        `${buildShareText()}\n\n${shareUrl}`
+      );
+
+window.open(twitterUrl.toString(), "_blank", "noopener,noreferrer");
+} catch (err) {
       setShareError(
         err instanceof Error
           ? err.message
