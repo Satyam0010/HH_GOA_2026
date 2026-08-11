@@ -157,7 +157,6 @@ function App() {
       const imageUrl = await uploadGraphic(canvas, format);
       const { shareUrl } = await createShare(imageUrl);
       const twitterUrl = new URL('https://twitter.com/intent/tweet');
-      twitterUrl.searchParams.set('text', buildShareText());
       twitterUrl.searchParams.set('url', shareUrl);
 
       window.open(twitterUrl.toString(), "_blank", "noopener,noreferrer");
